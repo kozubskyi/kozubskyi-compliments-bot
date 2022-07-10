@@ -29,31 +29,35 @@ bot.on("callback_query", (cb) => {
 })
 
 function makeResponse({ command, chatId, username }) {
-  let response = "К сожалению Вы не Елена Рак, а комплиментики я делаю только ей 🤷‍♂️"
-  let buttonOptions = {}
+  try {
+    let response = "К сожалению Вы не Елена Рак, а комплиментики я делаю только ей 🤷‍♂️"
+    let buttonOptions = {}
 
-  if (username === "lena_rak_05") {
-    if (command === "/start") {
-      response =
-        "Ленусик, приветик) 😘 Денис просил передать тебе кучу комплиментиков. Напиши или нажми /compliment и получишь комплиментик)"
-      // buttonOptions = {
-      //   reply_markup: JSON.stringify({
-      //     inline_keyboard: [[{ text: "Получить комплиментик", callback_data: "/compliment" }]],
-      //   }),
-      // }
-    } else if (command === "/compliment") {
-      const randomIndex = Math.floor(Math.random() * compliments.length)
-      response = compliments[randomIndex]
-      // buttonOptions = {
-      //   reply_markup: JSON.stringify({
-      //     inline_keyboard: [[{ text: "Получить еще комплиментик", callback_data: "/compliment" }]],
-      //   }),
-      // }
-    } else {
-      response = "Ленусик, такой команды не существует) Пока есть только команды /start и /compliment"
+    if (username === "lena_rak_05") {
+      if (command === "/start") {
+        response =
+          "Ленусик, приветик) 😘 Денис просил передать тебе кучу комплиментиков. Напиши или нажми /compliment и получишь комплиментик)"
+        // buttonOptions = {
+        //   reply_markup: JSON.stringify({
+        //     inline_keyboard: [[{ text: "Получить комплиментик", callback_data: "/compliment" }]],
+        //   }),
+        // }
+      } else if (command === "/compliment") {
+        const randomIndex = Math.floor(Math.random() * compliments.length)
+        response = compliments[randomIndex]
+        // buttonOptions = {
+        //   reply_markup: JSON.stringify({
+        //     inline_keyboard: [[{ text: "Получить еще комплиментик", callback_data: "/compliment" }]],
+        //   }),
+        // }
+      } else {
+        response = "Ленусик, такой команды не существует) Пока есть только команды /start и /compliment"
+      }
     }
-  }
 
-  bot.sendMessage(chatId, response, buttonOptions)
+    bot.sendMessage(chatId, response, buttonOptions)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
