@@ -1,5 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api")
-const compliments = require("./data")
+let compliments = require("./data")
 
 require("dotenv").config()
 
