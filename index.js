@@ -67,7 +67,7 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
     if (username === creator) {
       const commandArr = command.split(" ")
       const adminCommand = commandArr[0]
-      const newData = commandArr.join(" ")
+      const newData = commandArr.slice(1).join(" ")
 
       return bot.sendMessage(chatId, newData)
 
