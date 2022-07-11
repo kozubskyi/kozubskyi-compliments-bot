@@ -67,6 +67,7 @@ async function makeResponse({ username, command, chatId }) {
         response = "Комплиментик успешно удален"
       } else if (adminCommand === "ccd") {
         compliments = JSON.parse(newData)
+        response = "Все комплиментики успешно создались"
       } else if (command === "/all") {
         response = JSON.stringify(compliments)
       } else {
