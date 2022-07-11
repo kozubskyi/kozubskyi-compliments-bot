@@ -65,6 +65,8 @@ function makeResponse({ username, command, chatId }) {
       } else if (adminCommand === "del") {
         compliments = compliments.filter((compliment) => compliment !== newCompliment)
         response = "Комплиментик успешно удален"
+      } else if (command === "/all") {
+        response = compliments
       } else {
         response = "Некорректная команда"
       }
