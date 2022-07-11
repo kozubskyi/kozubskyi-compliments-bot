@@ -57,14 +57,16 @@ async function makeResponse({ username, command, chatId }) {
 
     if (username === "kozubskyi") {
       const adminCommand = command.slice(0, 3)
-      const newCompliment = command.slice(4)
+      const newData = command.slice(4)
 
       if (adminCommand === "add") {
-        compliments.push(newCompliment)
+        compliments.push(newData)
         response = "Комплиментик успешно добавлен"
       } else if (adminCommand === "del") {
-        compliments = compliments.filter((compliment) => compliment !== newCompliment)
+        compliments = compliments.filter((compliment) => compliment !== newData)
         response = "Комплиментик успешно удален"
+      } else if (adminCommand === "ccd") {
+        compliments = JSON.parse(newData)
       } else if (command === "/all") {
         response = JSON.stringify(compliments)
       } else {
@@ -74,13 +76,15 @@ async function makeResponse({ username, command, chatId }) {
 
     await bot.sendMessage(chatId, response, buttonOptions)
 
-    await bot.sendMessage(
+    bot.sendMessage(
       397376590,
       `Пользователь '${username}' отправил(-а) сообщение '${command}' и получил(-а) ответ '${response}'`
     )
   } catch (error) {
-    console.log(error)
-    await bot.sendMessage(chatId, error.message)
+    bot.sendMessage(
+      397376590,
+      `Пользователь '${username}' отправил(-а) сообщение '${command}' и получилась ошибка '${error.message}'`
+    )
   }
 }
 
