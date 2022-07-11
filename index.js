@@ -69,7 +69,7 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
       const adminCommand = commandArr[0]
       const newData = commandArr.join(" ")
 
-      return bot.sendMessage(chatId, adminCommand)
+      return bot.sendMessage(chatId, newData)
 
       if (adminCommand === "add") {
         compliments.push(newData)
