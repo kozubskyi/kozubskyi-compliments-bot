@@ -73,11 +73,11 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         compliments.push(newData)
         response = "Комплиментик успешно добавлен"
       } else if (adminCommand === "del") {
-        compliments = compliments.filter((compliment, index) => index != newData || compliment !== newData)
+        compliments = compliments.filter((compliment, index) => index != newData)
         response = "Комплиментик успешно удален"
       } else if (adminCommand === "cfd") {
         const parsedData = JSON.parse(newData)
-        compliments = typeof parsedData[0] === 'string' ? parsedData : parsedData.map((el) => el[1])
+        compliments = typeof parsedData[0] === "string" ? parsedData : parsedData.map((el) => el[1])
         response = "Все комплиментики успешно создались"
       } else if (command === "/all") {
         response = JSON.stringify(Object.entries(compliments))
