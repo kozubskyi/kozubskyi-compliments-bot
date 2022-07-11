@@ -77,7 +77,7 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         response = "Комплиментик успешно удален"
       } else if (adminCommand === "cfd") {
         const parsedData = JSON.parse(newData)
-        compliments = typeof parsedData[0] === "string" ? parsedData : parsedData.map((el) => el[1])
+        compliments = parsedData.map((el) => el[1])
         response = "Все комплиментики успешно создались"
       } else if (command === "/all") {
         response = JSON.stringify(Object.entries(compliments))
