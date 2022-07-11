@@ -2,7 +2,7 @@ const TelegramBot = require("node-telegram-bot-api")
 let compliments = require("./data")
 
 require("dotenv").config()
-const { BOT_TOKEN, KOZUBSKYI_CHAT_ID } = process.env
+const { BOT_TOKEN, KOZUBSKYI_CHAT_ID, LENA_RAK_CHAT_ID } = process.env
 
 const bot = new TelegramBot(BOT_TOKEN, { polling: true })
 
@@ -36,6 +36,7 @@ bot.on("message", (msg) => {
 async function makeResponse({ firstName = "", lastName = "", username, command, chatId }) {
   const sweet = "lena_rak_05"
   const creator = "kozubskyi"
+  const sweetChatId = Number(LENA_RAK_CHAT_ID)
   const creatorChatId = Number(KOZUBSKYI_CHAT_ID)
   let response = "К сожалению Вы не Елена Рак, а комплиментики я делаю только ей 🤷‍♂️"
   let buttonOptions = {}
@@ -64,8 +65,9 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
     }
 
     if (username === creator) {
-      const adminCommand = command.slice(0, 3)
-      const newData = command.slice(4)
+      const commandArr = command.split(" ")
+      const adminCommand = commandArr[0]
+      const newData = commandArr.join(" ")
 
       if (adminCommand === "add") {
         compliments.push(newData)
@@ -74,10 +76,14 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         compliments = compliments.filter((compliment, index) => index != newData || compliment !== newData)
         response = "Комплиментик успешно удален"
       } else if (adminCommand === "cfd") {
-        compliments = JSON.parse(newData)
+        const parsedData = JSON.parse(newData)
+        compliments = typeof parsedData[0] === "string" ? parsedData : parsedData.map((el) => el[1])
         response = "Все комплиментики успешно создались"
       } else if (command === "/all") {
         response = JSON.stringify(Object.entries(compliments))
+      } else if (adminCommand === "msg") {
+        await bot.sendMessage(sweetChatId, newData)
+        response = "Сообщение любимой отправлено"
       } else {
         response = "Некорректная команда"
       }
