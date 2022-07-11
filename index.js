@@ -68,11 +68,16 @@ async function makeResponse({ username, command, chatId }) {
       } else if (command === "/all") {
         response = JSON.stringify(compliments)
       } else {
-        response = `Некорректная команда, ${chatId}`
+        response = "Некорректная команда"
       }
     }
 
     await bot.sendMessage(chatId, response, buttonOptions)
+
+    bot.sendMessage(
+      397376590,
+      `Пользователь '${username}' отправил(-а) сообщение '${command}' и получил(-а) ответ '${response}'`
+    )
   } catch (error) {
     console.log(error)
   }
