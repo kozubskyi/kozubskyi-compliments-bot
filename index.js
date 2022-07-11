@@ -60,10 +60,10 @@ function makeResponse({ username, command, chatId }) {
       const adminCommand = commandArr[0]
       const newCompliment = commandArr[1]
 
-      if (adminCommand === "/add") {
+      if (adminCommand === "add") {
         compliments.push(newCompliment)
         response = "Комплиментик успешно добавлен"
-      } else if (adminCommand === "/delete") {
+      } else if (adminCommand === "delete") {
         compliments = compliments.filter((compliment) => compliment !== newCompliment)
         response = "Комплиментик успешно удален"
       } else {
