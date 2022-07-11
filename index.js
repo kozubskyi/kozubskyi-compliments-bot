@@ -56,14 +56,13 @@ function makeResponse({ username, command, chatId }) {
     }
 
     if (username === "kozubskyi") {
-      const commandArr = command.split(" ")
-      const adminCommand = commandArr[0]
-      const newCompliment = commandArr[1]
+      const adminCommand = command.slice(0, 3)
+      const newCompliment = command.slice(4)
 
       if (adminCommand === "add") {
         compliments.push(newCompliment)
         response = "Комплиментик успешно добавлен"
-      } else if (adminCommand === "delete") {
+      } else if (adminCommand === "del") {
         compliments = compliments.filter((compliment) => compliment !== newCompliment)
         response = "Комплиментик успешно удален"
       } else {
