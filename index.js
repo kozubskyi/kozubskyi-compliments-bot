@@ -74,12 +74,13 @@ async function makeResponse({ username, command, chatId }) {
 
     await bot.sendMessage(chatId, response, buttonOptions)
 
-    bot.sendMessage(
+    await bot.sendMessage(
       397376590,
       `Пользователь '${username}' отправил(-а) сообщение '${command}' и получил(-а) ответ '${response}'`
     )
   } catch (error) {
     console.log(error)
+    await bot.sendMessage(chatId, error.message)
   }
 }
 
