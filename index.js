@@ -13,22 +13,22 @@ bot.setMyCommands([
 // 👇 обработчик получения сообщения от пользователя
 bot.on("message", (msg) => {
   makeResponse({
+    username: msg.from.username,
     command: msg.text,
     chatId: msg.chat.id,
-    username: msg.from.username,
   })
 })
 
 // 👇 Обработчик клика на кнопку (если она есть)
 bot.on("callback_query", (cb) => {
   makeResponse({
+    username: cb.from.username,
     command: cb.data,
     chatId: cb.message.chat.id,
-    username: cb.from.username,
   })
 })
 
-function makeResponse({ command, chatId, username }) {
+function makeResponse({ username, command, chatId }) {
   try {
     let response = "К сожалению Вы не Елена Рак, а комплиментики я делаю только ей 🤷‍♂️"
     let buttonOptions = {}
@@ -52,6 +52,22 @@ function makeResponse({ command, chatId, username }) {
         // }
       } else {
         response = "Ленусик, такой команды не существует) Пока есть только команды /start и /compliment"
+      }
+    }
+
+    if (username === "kozubskyi") {
+      const commandArr = command.split(" ")
+      const adminCommand = commandArr[0]
+      const newCompliment = commandArr[1]
+
+      if (adminCommand === "/add") {
+        compliments.push(newCompliment)
+        response = "Комплиментик успешно добавлен"
+      } else if (adminCommand === "/delete") {
+        compliments = compliments.filter((compliment) => compliment !== newCompliment)
+        response = "Комплиментик успешно удален"
+      } else {
+        response = "Некорректная команда"
       }
     }
 
