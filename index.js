@@ -66,7 +66,7 @@ function makeResponse({ username, command, chatId }) {
         compliments = compliments.filter((compliment) => compliment !== newCompliment)
         response = "Комплиментик успешно удален"
       } else if (command === "/all") {
-        response = compliments
+        response = JSON.stringify(compliments)
       } else {
         response = "Некорректная команда"
       }
