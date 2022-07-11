@@ -28,7 +28,7 @@ bot.on("callback_query", (cb) => {
   })
 })
 
-function makeResponse({ username, command, chatId }) {
+async function makeResponse({ username, command, chatId }) {
   try {
     let response = "К сожалению Вы не Елена Рак, а комплиментики я делаю только ей 🤷‍♂️"
     let buttonOptions = {}
@@ -68,11 +68,11 @@ function makeResponse({ username, command, chatId }) {
       } else if (command === "/all") {
         response = JSON.stringify(compliments)
       } else {
-        response = "Некорректная команда"
+        response = `Некорректная команда, ${chatId}`
       }
     }
 
-    bot.sendMessage(chatId, response, buttonOptions)
+    await bot.sendMessage(chatId, response, buttonOptions)
   } catch (error) {
     console.log(error)
   }
