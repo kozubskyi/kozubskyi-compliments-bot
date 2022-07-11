@@ -76,10 +76,11 @@ async function makeResponse({ username, command, chatId }) {
 
     await bot.sendMessage(chatId, response, buttonOptions)
 
-    bot.sendMessage(
-      397376590,
-      `Пользователь '${username}' отправил(-а) сообщение '${command}' и получил(-а) ответ '${response}'`
-    )
+    username !== "kozubskyi" &&
+      bot.sendMessage(
+        397376590,
+        `Пользователь '${username}' отправил(-а) сообщение '${command}' и получил(-а) ответ '${response}'`
+      )
   } catch (error) {
     bot.sendMessage(
       397376590,
