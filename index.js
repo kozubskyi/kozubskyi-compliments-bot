@@ -50,7 +50,7 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         const randomIndex = Math.floor(Math.random() * compliments.length)
         response = compliments[randomIndex]
       } else {
-        response = "Ленусик, такой команды не существует) Пока есть только команды /start и /compliment"
+        response = "Я передам Денису то, что ты написала) 😘"
       }
     } else if (username === creator) {
       const [adminCommand, newData] = splitMessage(command)
@@ -117,5 +117,6 @@ function splitMessage(msg) {
 
   return [data, text]
 }
+
 
 
