@@ -7,7 +7,7 @@ const { BOT_TOKEN, KOZUBSKYI_CHAT_ID, LENA_RAK_CHAT_ID } = process.env
 const bot = new TelegramBot(BOT_TOKEN, { polling: true })
 
 bot.setMyCommands([
-  { command: "/start", description: "Начать" },
+  // { command: "/start", description: "Начать" },
   { command: "/compliment", description: "Получить комплиментик" },
 ])
 
@@ -88,7 +88,7 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         response = JSON.stringify(Object.entries(compliments))
       } else if (command === "/help") {
         response =
-          "**add _** - добавить новый комплиментик с текстом _; <b>del _</b> - удалить комплиментик с индексом _"
+          "'add _' - добавить новый комплиментик с текстом _; 'del _' - удалить комплиментик с индексом _; 'cfd _' - перезаписать массив всех элементов на _; 'mlr _' - отправить сообщение Лене Рак с текстом _; 'msg _ __' - отправить сообщение пользователю с id чата _ и текстом __; '/all' - получить массив entries всех комплиментиков."
       } else {
         response = "Некорректная команда"
       }
