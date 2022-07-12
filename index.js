@@ -65,9 +65,7 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
     }
 
     if (username === creator) {
-      const commandArr = command.split(" ")
-      const adminCommand = commandArr[0]
-      const newData = commandArr.slice(1).join(" ")
+      const [adminCommand, newData] = splitMessage(command)
 
       if (adminCommand === "add") {
         compliments.push(newData)
@@ -79,11 +77,18 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         const parsedData = JSON.parse(newData)
         compliments = typeof parsedData[0] === "string" ? parsedData : parsedData.map((el) => el[1])
         response = "Все комплиментики успешно создались"
+      } else if (adminCommand === "mlr") {
+        await bot.sendMessage(sweetChatId, newData)
+        response = "Сообщение любимой успешно отправлено"
+      } else if (adminCommand === "msg") {
+        const [receiverChatId, text] = splitMessage(newData)
+        await bot.sendMessage(Number(receiverChatId), text)
+        response = "Сообщение пользователю успешно отправлено"
       } else if (command === "/all") {
         response = JSON.stringify(Object.entries(compliments))
-      } else if (adminCommand === "msg") {
-        await bot.sendMessage(sweetChatId, newData)
-        response = "Сообщение любимой отправлено"
+      } else if (command === "/help") {
+        response =
+          "**add _** - добавить новый комплиментик с текстом _; <b>del _</b> - удалить комплиментик с индексом _"
       } else {
         response = "Некорректная команда"
       }
@@ -97,10 +102,20 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         `Пользователь '${firstName} ${lastName} <${username}> (${chatId})' отправил(-а) сообщение '${command}' и получил(-а) ответ '${response}'`
       )
   } catch (error) {
+    username !== creator && (await bot.sendMessage(chatId, "Я немножко сломался, скоро починюсь и вернусь 😊"))
+
     bot.sendMessage(
       creatorChatId,
       `Пользователь '${firstName} ${lastName} <${username}> (${chatId})' отправил(-а) сообщение '${command}' и получилась ошибка '${error.message}'`
     )
   }
+}
+
+function splitMessage(msg) {
+  const msgArr = msg.split(" ")
+  let data = msgArr[0]
+  let text = msgArr.slice(1).join(" ")
+
+  return [data, text]
 }
 
