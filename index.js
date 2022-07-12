@@ -38,7 +38,7 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
   const creator = "kozubskyi"
   const sweetChatId = Number(LENA_RAK_CHAT_ID)
   const creatorChatId = Number(KOZUBSKYI_CHAT_ID)
-  let response = "К сожалению Вы не Елена Рак, а комплиментики я делаю только ей 🤷‍♂️"
+  let response
   let buttonOptions = {}
 
   try {
@@ -46,25 +46,13 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
       if (command === "/start") {
         response =
           "Ленусик, приветик) 😘 Денис просил передать тебе кучу комплиментиков. Напиши или нажми /compliment и получишь комплиментик)"
-        // buttonOptions = {
-        //   reply_markup: JSON.stringify({
-        //     inline_keyboard: [[{ text: "Получить комплиментик", callback_data: "/compliment" }]],
-        //   }),
-        // }
       } else if (command === "/compliment") {
         const randomIndex = Math.floor(Math.random() * compliments.length)
         response = compliments[randomIndex]
-        // buttonOptions = {
-        //   reply_markup: JSON.stringify({
-        //     inline_keyboard: [[{ text: "Получить еще комплиментик", callback_data: "/compliment" }]],
-        //   }),
-        // }
       } else {
         response = "Ленусик, такой команды не существует) Пока есть только команды /start и /compliment"
       }
-    }
-
-    if (username === creator) {
+    } else if (username === creator) {
       const [adminCommand, newData] = splitMessage(command)
 
       if (adminCommand === "add") {
@@ -92,6 +80,17 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
       } else {
         response = "Некорректная команда"
       }
+    } else {
+      if (command === "/start" || command === "/compliment") {
+        response = "К сожалению Вы не Елена Рак, а комплиментики я делаю только ей 🤷‍♂️"
+        // buttonOptions = {
+        //   reply_markup: JSON.stringify({
+        //     inline_keyboard: [[{ text: "Получить комплиментик", callback_data: "/compliment" }]],
+        //   }),
+        // }
+      } else {
+        response = "Я передам Денису то, что Вы написали 😉"
+      }
     }
 
     await bot.sendMessage(chatId, response, buttonOptions)
@@ -118,4 +117,5 @@ function splitMessage(msg) {
 
   return [data, text]
 }
+
 
