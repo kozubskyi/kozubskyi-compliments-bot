@@ -1,8 +1,10 @@
 const TelegramBot = require("node-telegram-bot-api")
-let compliments = require("./data")
+const dotenv = require("dotenv")
+const path = require("path")
+const axios = require("axios")
 
-require("dotenv").config()
-const { BOT_TOKEN, KOZUBSKYI_CHAT_ID, LENA_RAK_CHAT_ID } = process.env
+dotenv.config()
+const { BOT_TOKEN, KOZUBSKYI_CHAT_ID, LENA_RAK_CHAT_ID, DATABASE_URL } = process.env
 
 const bot = new TelegramBot(BOT_TOKEN, { polling: true })
 
@@ -33,7 +35,7 @@ bot.on("message", (msg) => {
 //   })
 // })
 
-async function makeResponse({ firstName = "", lastName = "", username, command, chatId }) {
+async function makeResponse({ firstName, lastName, username, command, chatId }) {
   const sweet = "lena_rak_05"
   const creator = "kozubskyi"
   const sweetChatId = Number(LENA_RAK_CHAT_ID)
@@ -47,6 +49,7 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         response =
           "Ленусик, приветик) 😘 Денис просил передать тебе кучу комплиментиков. Напиши или нажми /compliment и получишь комплиментик)"
       } else if (command === "/compliment") {
+        const compliments = await axios.get(DATABASE_URL)
         const randomIndex = Math.floor(Math.random() * compliments.length)
         response = compliments[randomIndex]
       } else {
@@ -73,7 +76,8 @@ async function makeResponse({ firstName = "", lastName = "", username, command, 
         await bot.sendMessage(Number(receiverChatId), text)
         response = "Сообщение пользователю успешно отправлено"
       } else if (command === "/all") {
-        response = JSON.stringify(Object.entries(compliments))
+        const compliments = await axios.get(DATABASE_URL)
+        response = JSON.stringify(compliments)
       } else if (command === "/help") {
         response =
           "'add _' - добавить новый комплиментик с текстом _; 'del _' - удалить комплиментик с индексом _; 'cfd _' - перезаписать массив всех элементов на _; 'mlr _' - отправить сообщение Лене Рак с текстом _; 'msg _ __' - отправить сообщение пользователю с id чата _ и текстом __; '/all' - получить массив entries всех комплиментиков."
@@ -117,6 +121,4 @@ function splitMessage(msg) {
 
   return [data, text]
 }
-
-
 
