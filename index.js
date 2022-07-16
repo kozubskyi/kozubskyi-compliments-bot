@@ -3,7 +3,6 @@ require("dotenv").config() // Без этого кода на 1-й строке 
 // Решение: https://github.com/yagop/node-telegram-bot-api/issues/540
 
 const TelegramBot = require("node-telegram-bot-api")
-const dotenv = require("dotenv")
 const axios = require("axios")
 
 const { BOT_TOKEN, KOZUBSKYI_CHAT_ID, LENA_RAK_CHAT_ID, DATABASE_URL } = process.env
