@@ -1,3 +1,7 @@
+process.env.NTBA_FIX_319 = 1 // Без этого кода на 1-й строке выдает ошибку:
+// node-telegram-bot-api deprecated Automatic enabling of cancellation of promises is deprecated. In the future, you will have to enable it yourself. See https://github.com/yagop/node-telegram-bot-api/issues/319. at node:internal/modules/cjs/loader:1105:14
+// Решение: https://github.com/yagop/node-telegram-bot-api/issues/540
+
 const TelegramBot = require("node-telegram-bot-api")
 const dotenv = require("dotenv")
 const path = require("path")
@@ -123,3 +127,4 @@ function splitMessage(msg) {
 
   return [data, text]
 }
+
