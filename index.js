@@ -123,5 +123,3 @@ function splitMessage(msg) {
 
   return [data, text]
 }
-
-
