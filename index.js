@@ -49,7 +49,7 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
   let buttonOptions = {}
 
   try {
-    if (username === sweet) {
+    if (username === creator) {
       if (command === "/start") {
         response =
           "Ленусик, приветик) 😘 Денис просил передать тебе кучу комплиментиков. Напиши или нажми /compliment и получишь комплиментик)"
@@ -61,42 +61,42 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
       } else {
         response = "Я передам Денису то, что ты написала) 😘"
       }
-    } else if (username === creator) {
-      const [adminCommand, newData] = splitMessage(command)
+    // } else if (username === creator) {
+    //   const [adminCommand, newData] = splitMessage(command)
 
-      if (adminCommand === "add") {
-        await axios.post(DATABASE_URL, { text: newData })
+    //   if (adminCommand === "add") {
+    //     await axios.post(DATABASE_URL, { text: newData })
 
-        response = "Комплиментик успешно добавлен"
-      } else if (adminCommand === "del") {
-        await axios.delete(`${DATABASE_URL}/${newData}`)
+    //     response = "Комплиментик успешно добавлен"
+    //   } else if (adminCommand === "del") {
+    //     await axios.delete(`${DATABASE_URL}/${newData}`)
 
-        response = "Комплиментик успешно удален"
-      } else if (adminCommand === "mlr") {
-        await bot.sendMessage(sweetChatId, newData)
+    //     response = "Комплиментик успешно удален"
+    //   } else if (adminCommand === "mlr") {
+    //     await bot.sendMessage(sweetChatId, newData)
 
-        response = "Сообщение любимой успешно отправлено"
-      } else if (adminCommand === "msg") {
-        const [receiverChatId, text] = splitMessage(newData)
+    //     response = "Сообщение любимой успешно отправлено"
+    //   } else if (adminCommand === "msg") {
+    //     const [receiverChatId, text] = splitMessage(newData)
 
-        await bot.sendMessage(Number(receiverChatId), text)
-        response = "Сообщение пользователю успешно отправлено"
-      } else if (command === "/all") {
-        const { data } = await axios.get(DATABASE_URL)
+    //     await bot.sendMessage(Number(receiverChatId), text)
+    //     response = "Сообщение пользователю успешно отправлено"
+    //   } else if (command === "/all") {
+    //     const { data } = await axios.get(DATABASE_URL)
 
-        response = JSON.stringify(data)
-      } else if (command === "/help") {
-        response = `
+    //     response = JSON.stringify(data)
+    //   } else if (command === "/help") {
+    //     response = `
 
-        "add _" - добавить новый комплиментик с текстом _
-        "del _" - удалить комплиментик с текстом _
-        "mlr _" - отправить сообщение Лене Рак с текстом _
-        "msg _ __" - отправить сообщение пользователю с id чата _ и текстом __
-        "/all" - получить entries всех комплиментиков
-        `
-      } else {
-        response = "Некорректная команда"
-      }
+    //     "add _" - добавить новый комплиментик с текстом _
+    //     "del _" - удалить комплиментик с текстом _
+    //     "mlr _" - отправить сообщение Лене Рак с текстом _
+    //     "msg _ __" - отправить сообщение пользователю с id чата _ и текстом __
+    //     "/all" - получить entries всех комплиментиков
+    //     `
+    //   } else {
+    //     response = "Некорректная команда"
+    //   }
     } else {
       if (command === "/start" || command === "/compliment") {
         response = "К сожалению Вы не Елена Рак, а комплиментики я делаю только ей 🤷‍♂️"
