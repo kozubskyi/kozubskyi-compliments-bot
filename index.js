@@ -67,20 +67,20 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
       if (adminCommand === "add") {
         await axios.post(DATABASE_URL, { text: newData })
 
-        response = "Комплиментик успешно добавлен"
+        response = "Комплиментик добавлен"
       } else if (adminCommand === "del") {
         await axios.delete(`${DATABASE_URL}/${newData}`)
 
-        response = "Комплиментик успешно удален или такого и не было в базе данных"
+        response = "Комплиментик удален или такого и не было в базе данных"
       } else if (adminCommand === "mlr") {
         await bot.sendMessage(sweetChatId, newData)
 
-        response = "Сообщение любимой успешно отправлено"
+        response = "Сообщение любимой отправлено"
       } else if (adminCommand === "msg") {
         const [receiverChatId, text] = splitMessage(newData)
 
         await bot.sendMessage(Number(receiverChatId), text)
-        response = "Сообщение пользователю успешно отправлено"
+        response = "Сообщение пользователю отправлено"
       } else if (command === "/all") {
         const { data } = await axios.get(DATABASE_URL)
 
