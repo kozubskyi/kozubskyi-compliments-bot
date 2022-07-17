@@ -57,7 +57,7 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
         const { data } = await axios.get(DATABASE_URL)
         const randomIndex = Math.floor(Math.random() * data.length)
 
-        response = data[randomIndex].text
+        response = data[randomIndex][1]
       } else {
         response = "Я передам Денису то, что ты написала) 😘"
       }
@@ -92,7 +92,7 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
         "del _" - удалить комплиментик с текстом _
         "mlr _" - отправить сообщение Лене Рак с текстом _
         "msg _ __" - отправить сообщение пользователю с id чата _ и текстом __
-        "/all" - получить массив всех комплиментиков
+        "/all" - получить entries всех комплиментиков
         `
       } else {
         response = "Некорректная команда"
