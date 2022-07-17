@@ -71,7 +71,7 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
       } else if (adminCommand === "del") {
         await axios.delete(`${DATABASE_URL}/${newData}`)
 
-        response = `Комплиментик с id ${newData} успешно удален или такого и не было`
+        response = "Комплиментик успешно удален"
       } else if (adminCommand === "mlr") {
         await bot.sendMessage(sweetChatId, newData)
 
