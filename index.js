@@ -71,7 +71,7 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
       } else if (adminCommand === "del") {
         await axios.delete(`${DATABASE_URL}/${newData}`)
 
-        response = "Комплиментик успешно удален"
+        response = "Комплиментик успешно удален или такого и не было в базе данных"
       } else if (adminCommand === "mlr") {
         await bot.sendMessage(sweetChatId, newData)
 
@@ -85,6 +85,10 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
         const { data } = await axios.get(DATABASE_URL)
 
         response = JSON.stringify(data)
+      } else if (command === "/allq") {
+        const { data } = await axios.get(DATABASE_URL)
+
+        response = data.length
       } else if (command === "/help") {
         response = `
         Команды:
@@ -92,7 +96,8 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
         "del _" - удалить комплиментик с текстом _;
         "mlr _" - отправить сообщение Лене Рак с текстом _;
         "msg _ __" - отправить сообщение пользователю с id чата _ и текстом __;
-        "/all" - получить entries всех комплиментиков.
+        "/all" - получить entries всех комплиментиков;
+        "/allq - количество всех комплиментиков в базе данных.
         `
       } else {
         response = "Некорректная команда"
