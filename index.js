@@ -69,7 +69,7 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
 
         response = "Комплиментик успешно добавлен"
       } else if (adminCommand === "del") {
-        await axios.delete(DATABASE_URL, { text: newData })
+        await axios.delete(`${DATABASE_URL}/${newData}`)
 
         response = "Комплиментик успешно удален"
       } else if (adminCommand === "mlr") {
