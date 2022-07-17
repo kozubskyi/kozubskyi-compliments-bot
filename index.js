@@ -69,11 +69,9 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
 
         response = "Комплиментик успешно добавлен"
       } else if (adminCommand === "del") {
-        const resp = await axios.delete(`${DATABASE_URL}/${newData}`)
+        await axios.delete(`${DATABASE_URL}/${newData}`)
 
-        console.log(resp)
-
-        response = "Комплиментик успешно удален"
+        response = `Комплиментик с id ${newData} успешно удален или такого и не было`
       } else if (adminCommand === "mlr") {
         await bot.sendMessage(sweetChatId, newData)
 
@@ -89,6 +87,7 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
         response = JSON.stringify(data)
       } else if (command === "/help") {
         response = `
+
         "add _" - добавить новый комплиментик с текстом _
         "del _" - удалить комплиментик с текстом _
         "mlr _" - отправить сообщение Лене Рак с текстом _
