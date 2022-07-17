@@ -117,7 +117,7 @@ async function makeResponse({ firstName, lastName, username, command, chatId }) 
         creatorChatId,
         `Пользователь "${firstName} ${lastName} <${username}> (${chatId})" отправил(-а) сообщение "${command}" и получил(-а) ответ "${response}"`
       )
-  } catch (error) {
+  } catch (err) {
     username !== creator && (await bot.sendMessage(chatId, "Я немножко сломался, скоро починюсь и вернусь 👨‍🔧⚙️😊"))
 
     bot.sendMessage(
